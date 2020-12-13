@@ -213,15 +213,15 @@ window.addEventListener("message", function (e) {
 				
 				//Se o episodio não for apenas para premium pega as urls de um jeito mais facil
 				if(is_ep_premium_only == false) {
-					var video_1080p_dash_playlist_url_no_clipe = video_m3u8_array[1].replace("/clipFrom/0000/clipTo/" + video_config_media['metadata']['duration'] + "/index.m3u8", ",.urlset/manifest.mpd");
-					var video_1080p_dash_playlist_url = video_1080p_dash_playlist_url_no_clipe.replace(video_1080p_dash_playlist_url_no_clipe.split("_")[0] + "_", video_1080p_dash_playlist_url_no_clipe.split("_")[0] + "_,");
+					video_dash_playlist_url_old = player_current_playlist.replace("master.m3u8","manifest.mpd").replace(player_current_playlist.split("/")[2], "dl.v.vrv.co");
+					video_dash_playlist_url = player_current_playlist.replace(player_current_playlist.split("/")[2], "a-vrv.akamaized.net");
 
 					//console.log("Dash Playlist: " + video_dash_playlist_url);
 
 					$.ajax({
 						async: true,
 						type: "GET",
-						url: video_1080p_dash_playlist_url,
+						url: video_dash_playlist_url_old,
 						success: function (result,status,xhr) {
 							var params_download_link = pegaString(xhr.responseText, '.m4s?', '"');
 							var video_1080p_code = video_dash_playlist_url.split(",")[2];
